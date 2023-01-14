@@ -1,24 +1,26 @@
-import React, {useState} from 'react'
+import { forwardRef, useEffect, useState } from "react"
 
-function LoginForm(props) {
+const LoginForm = forwardRef((props,ref) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
-    const handleTextChange =(e)=>{
+    const handleUsername = (e) => {
         setUsername(e.target.value)
     }
 
-    const handlePasswordChange = (e) => {
+    const handlePassword = (e) => {
         setPassword(e.target.value)
     }
 
-    return (
-        <div className='loginform'>
-            <input type="text" onChange={handleTextChange} value={username} placeholder="Username" />
-            <input type="password" onChange={handlePasswordChange} value={password} placeholder="Password" />
-            <button>Submit</button>
-        </div>
-    )
-}
+    useEffect(()=>{
+        ref.current.focus()
+    }, [])
+
+    return <div className="forms">
+        <input type="text" ref={ref} onChange={handleUsername} value={username} placeholder="Username" />
+        <input type="password" onChange={handlePassword} value={password} placeholder="Password" />
+        <button >Submit</button>
+    </div>
+})
 
 export default LoginForm

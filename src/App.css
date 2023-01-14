@@ -13,8 +13,7 @@ input {
   align-items: center;
 }
 
-.signupform,
-.loginform {
+.forms{
   display: flex;
   flex-direction: column;
   padding: 1rem;

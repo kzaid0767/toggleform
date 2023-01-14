@@ -1,57 +1,45 @@
-import React, { useState, useRef, forwardRef, useEffect, createElement } from 'react'
+import { createElement, useState, useRef } from "react"
 
 const ToggleableForm = ({ options }) => {
     const [currentForm, setCurrentForm] = useState(0) // Change this to 1 to get the Signup form to show up
-    let focusRef = useRef(0)
+    let focusRef = useRef(null)
 
     const toggleForm = (idx) => {
         setCurrentForm(idx)
     }
 
-    const toggleRef = () => {
-        console.log('something')
-    }
-    
-    return (
-        <>
-                {options.map((el, index) => {
-                return <ButtonToggle 
-                    toggleForm={toggleForm}
-                    toggleRef={toggleRef} 
-                    index={index} 
-                    key={`button${index}`}>
-                        {el.name}
-                    </ButtonToggle>
-            })}
-            <FormToggle ref={focusRef} currentIndex={currentForm}>
-                {options.map((el, index) => {
+    return <>
+        {options.map((el, index) => {
+            return <ButtonToggle idx = {index}
+            toggleForm={toggleForm}      
+            key={`button${index}`}>{el.name}</ButtonToggle>
+        })}
+        <FormToggle currentIndex={currentForm}>
+            {options.map((el, index) => {
                 return <div key={`form${index}`}>
-                    {createElement(el.component, { })}
+                    {createElement(el.component, { ref: focusRef })}
                 </div>
-                })}
-            </FormToggle>
-        </>
-    )
+            })}
+        </FormToggle>
+    </>
 }
 
-const ButtonToggle = ({ children, toggleRef, toggleForm, index
-    }) => {
+const ButtonToggle = ({ children, idx, toggleRef, toggleForm }) => {
     return <button onClick={() => {
-      // Hmm, things should happen here
-        toggleForm(index)
-        toggleRef()
+        // Hmm, things should happen here
+        toggleForm(idx)
     }}>{children}</button>
 }
 
-const FormToggle = forwardRef(( props,ref ) => {
-    if (Array.isArray(props.children)) {
-        return <div ref={ref}>{props.children[props.currentIndex]}</div>
+const FormToggle = ({ children, currentIndex }) => {
+    if (Array.isArray(children)) {
+        return <div>{children[currentIndex]}</div>
         // Remember, `children` is an array when there's multiple!
         // So, if you want to show all the forms, you just put
         // `children`.
         // What would you do if you just wanted to show one?
     }
     return null
-})
+}
 
 export default ToggleableForm

@@ -1,31 +1,32 @@
-import React, {useState} from 'react'
+import { forwardRef, useState, useEffect } from "react";
 
-function SignupForm() {
-
+const SignupForm = forwardRef((props, ref) => {
     const [email, setEmail] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
-    const handleEmailChange =(e) => {
+    const handleEmail = (e) => {
         setEmail(e.target.value)
-    }
 
-    const handleTextChange =(e) => {
+    }
+    const handleUsername = (e) => {
         setUsername(e.target.value)
-    }
 
-    const handlePasswordChange = (e) => {
+    }
+    const handlePassword = (e) => {
         setPassword(e.target.value)
     }
 
-    return (
-        <div className='signupform'>
-            <input type="email" onChange={handleEmailChange} value={email} placeholder="Email" />
-            <input type="text" onChange={handleTextChange} value={username} placeholder="Username" />
-            <input type="password" onChange={handlePasswordChange} value={password} placeholder="Password" />
-            <button>Submit</button>
-        </div>
-    )
-}
+    useEffect(()=>{
+        ref.current.focus()
+    },[])
+
+    return <div className="forms">
+        <input onChange={handleEmail} ref={ref} type="email" value={email} placeholder="Email" />
+        <input onChange={handleUsername} type="text" value={username} placeholder="Username" />
+        <input onChange={handlePassword} type="password" value={password} placeholder="Password" />
+        <button>Submit</button>
+    </div>
+})
 
 export default SignupForm
