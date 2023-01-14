@@ -1,25 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
+import LoginForm from './LoginForm';
+import SignupForm from './SignupForm';
+import ToggleableForm from './ToggleableForm';
 
 function App() {
+  let data = [
+    { name: 'Log in', component: LoginForm },
+    { name: 'Sign up', component: SignupForm }
+  ]
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <section className='main'>
+      <h2>Log in / Sign up</h2>
+      <ToggleableForm options={data} />
+    </section>
+  )
 }
 
 export default App;
